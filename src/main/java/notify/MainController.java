@@ -15,30 +15,27 @@ public class MainController {
 
     @GetMapping("/")
     public String getIndex(Model model) {
-        model.addAttribute("phoneNumber", new PhoneNumber());
+        model.addAttribute("address", new Address());
         return "index";
     }
 
     @PostMapping("/")
-    public String postIndex(@ModelAttribute PhoneNumber phoneNumber) {
-        System.out.println(phoneNumber.getPhoneNumber());
-        return "redirect:/result?phoneNumber=" + phoneNumber.getPhoneNumber();
+    public String postIndex(@ModelAttribute Address address) {
+        System.out.println("post");
+        System.out.println(address.toString());
+        return (
+            "redirect:/result?name=" + address.getName() +
+            "&streetAddress=" + address.getStreetAddress() +
+            "&county=" + address.getCounty() +
+            "&town=" + address.getTown() +
+            "&postode=" + address.getPostcode()
+        );
     }
 
     @GetMapping("/result")
-    public String result(@ModelAttribute PhoneNumber phoneNumber) {
-        System.out.println(phoneNumber.getPhoneNumber());
+    public String result(@ModelAttribute Address address) {
+        System.out.println("result");
+        System.out.println(address.toString());
         return "result";
     }
-
-    @GetMapping("/notifications")
-    public String results(Model model) {
-        List<String> things = new ArrayList<String>();
-        things.add("one");
-        things.add("two");
-        things.add("three");
-        model.addAttribute("things", things);
-        return "notifications";
-    }
-
 }
